@@ -1,0 +1,29 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/palak68/Ai-interview-preperation-.git"
+  },
+  "author": "palak sharma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/palak68/Ai-interview-preperation-/issues"
+  },
+  "homepage": "https://github.com/palak68/Ai-interview-preperation-#readme",
+  "description": "",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.24.1",
+    "nodemon": "^3.1.14"
+  }
+}
