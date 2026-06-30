@@ -1,8 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBT-eiaBmTyUbvKSJLL2LhsmKEavmJJW1c",
+  apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
   authDomain: "ai-interview-preperation-1fe58.firebaseapp.com",
   projectId: "ai-interview-preperation-1fe58",
   storageBucket: "ai-interview-preperation-1fe58.firebasestorage.app",
@@ -12,5 +14,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-export default app;
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+export {auth,provider};

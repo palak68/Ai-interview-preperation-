@@ -3,7 +3,29 @@ import { FaRobot } from "react-icons/fa";
 import { IoSparkles } from "react-icons/io5";
 import { motion } from "motion/react";
 import {FcGoogle} from "react-icons/fc";
+import { auth, provider } from "../utils/firebase";
+import { signInWithPopup } from "firebase/auth";
+import axios from "axios";
+import { serverUrl } from "../App";
 const Auth = () => {
+  
+  const handleGoogleAuth = async ()=>{
+   
+    try{
+const response = await signInWithPopup(auth, provider);
+let user = response.user;
+let name = user.displayName;
+let email = user.email;
+const result = await axios.post(serverUrl+"/api/auth/google",
+  {name,email},{withCredentials:true});
+  console.log(result.data);
+    } catch(error){
+console.log(error)
+    }
+  }
+  
+  
+  
   return (
     <div className="w-full min-h-screen bg-[#f3f3f3] flex items-center justify-center px-6 py-20">
       <motion.div 
@@ -34,13 +56,14 @@ const Auth = () => {
            track your progress, and unlock detailed performance insights. 
         </p>
         <motion.button
-        whileHover={{ scale: 1.05 }}
+       onClick={handleGoogleAuth}
+       whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className=" w-full bg-black text-white  py-3 rounded-full font-semibold hover:bg-gray-800 
         transition-colors duration-300 shadow-md gap-2 flex items-center justify-center"
         >
-          <FcGoogle size={20} />
-          continue with Google
+          <FcGoogle size={22} />
+          Continue with Google
         </motion.button>
 
       </motion.div>
