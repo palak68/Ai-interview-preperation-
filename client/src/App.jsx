@@ -4,21 +4,25 @@ import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import { useEffect } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUserData } from "./redux/userSlice";
 
 export const serverUrl = "http://localhost:8000";
 
 function App() {
+  const dispatch = useDispatch();
   useEffect(() => {
 const getUser = async ()=>{
   try{
 const result = await axios.get(`${serverUrl}/api/users/current-user`, { withCredentials: true });
-    console.log("Current User:", result.data);
+    dispatch(setUserData(result.data));
   } catch(error){
 console.error("Error fetching current user:", error);
+dispatch(setUserData(null));
   }
 }  
 getUser();
-  }, [])
+  }, [dispatch]);
   return (
     <Routes>
       <Route path="/" element={<Home />} />
