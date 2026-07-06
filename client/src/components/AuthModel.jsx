@@ -13,7 +13,8 @@ function AuthModel({onClose}) {
     },[userData,onClose]);
     return(
         <div className="fixed inset-0  z-[999]
-        bg-black/10 backdrop-blur-sm flex items-center justify-center px-4">
+        bg-black/10 backdrop-blur-sm flex items-center justify-center px-4
+        ">
 
 <div className="relative w-full max-w-md ">
 <button onClick={onClose} className="absolute top-8
