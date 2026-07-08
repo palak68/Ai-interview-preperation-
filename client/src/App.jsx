@@ -5,6 +5,7 @@ import Auth from "./pages/Auth";
 import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import InterviewPage from "./pages/interviewPage";
 import { setUserData } from "./redux/userSlice";
 
 export const serverUrl = "http://localhost:8000";
@@ -27,6 +28,8 @@ getUser();
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/auth" element={<Auth />} />
+      <Route path="/interview" element={<InterviewPage />} />
+
     </Routes>
   );
 }
