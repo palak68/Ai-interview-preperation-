@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const askAi =async(messages)=>{
 try{
-if(!messages||Array.isArray(messages)||messages.length==0){
+if(!messages||!Array.isArray(messages)||messages.length==0){
     throw new Error("message array is empty");
 }
 const response = await axios.post("https://openrouter.ai/api/v1/chat/completions",
@@ -26,6 +26,6 @@ return content;
 }
 catch(error){
 console.log("openRouterError:",error.response?.data||error.message);
-throw new error("Open Router api error");
+throw new Error("Open Router api error");
 }
 }

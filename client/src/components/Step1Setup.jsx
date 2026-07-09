@@ -12,6 +12,7 @@ import { useState } from 'react';
 import axios from "axios"
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../redux/userSlice';
+import { serverUrl } from '../App';
 function Step1SetUp({ onStart }) {
 const {userData}= useSelector((state)=>state.user)
     const dispatch = useDispatch()
@@ -26,7 +27,46 @@ const {userData}= useSelector((state)=>state.user)
     const [analysisDone, setAnalysisDone] = useState(false);
     const [analyzing, setAnalyzing] = useState(false);
 
+const handleUploadResume = async ()=>{
+    if(!resumeFile||analyzing)return;
+    setAnalyzing(true);
+    const formData = new FormData(); 
+    formData.append("resume", resumeFile)
+    try{
+    const result = await axios.post(serverUrl +"/api/interview/resume", formData, { withCredentials: true });
+    console.log(result.data)
 
+            setRole(result.data.role || "");
+            setExperience(result.data.experience || "");
+            setProjects(result.data.projects || []);
+            setSkills(result.data.skills || []);
+            setResumeText(result.data.resumeText || "");
+            setAnalysisDone(true);
+
+            setAnalyzing(false);
+    } 
+    catch(error) {
+console.log(error)
+            setAnalyzing(false);
+    }
+}
+
+const handleStart = async () => {
+        setLoading(true)
+        try {
+           const result = await axios.post(serverUrl + "/api/interview/generate-questions" , {role, experience, mode , resumeText, projects, skills } , {withCredentials:true}) 
+           console.log(result.data)
+           if(userData){
+            dispatch(setUserData({...userData , credits:result.data.creditsLeft}))
+           }
+           setLoading(false)
+           onStart(result.data)
+
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
+    }
 return(
 
 <motion.div initial={{ opacity: 0 }}
@@ -146,15 +186,51 @@ return(
                                         }}
 
                                         className='mt-4 bg-gray-900 text-white px-5 py-2 rounded-lg hover:bg-gray-800 transition'>
-                                       Analyze interview
+                                       
                                         {analyzing ? "Analyzing..." : "Analyze Resume"}
 
 
 
                                     </motion.button>)}
+                                    
 
 </motion.div>
-)}     
+)}         {analysisDone && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className='bg-gray-50 border border-gray-200 rounded-xl p-5 space-y-4'>
+                                <h3 className='text-lg font-semibold text-gray-800'>
+                                    Resume Analysis Result</h3>
+
+                                {projects.length > 0 && (
+                                    <div>
+                                        <p className='font-medium text-gray-700 mb-1'>
+                                            Projects:</p>
+
+                                        <ul className='list-disc list-inside text-gray-600 space-y-1'>
+                                            {projects.map((p, i) => (
+                                                <li key={i}>{p}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+
+                                {skills.length > 0 && (
+                                    <div>
+                                        <p className='font-medium text-gray-700 mb-1'>
+                                            Skills:</p>
+
+                                        <div className='flex flex-wrap gap-2'>
+                                            {skills.map((s, i) => (
+                                                <span key={i} className='bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm'>{s}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}  
+
+                            </motion.div>
+                        )}
 
 
                         <motion.button
