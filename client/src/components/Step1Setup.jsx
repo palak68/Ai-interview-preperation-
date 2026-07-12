@@ -54,8 +54,9 @@ console.log(error)
 const handleStart = async () => {
         setLoading(true)
         try {
-           const result = await axios.post(serverUrl + "/api/interview/generate-questions" , {role, experience, mode , resumeText, projects, skills } , {withCredentials:true}) 
-           console.log(result.data)
+           const result = 
+           await axios.post(serverUrl + "/api/interview/generate-questions" , {role, experience, mode , resumeText, projects, skills } , {withCredentials:true}) 
+           
            if(userData){
             dispatch(setUserData({...userData , credits:result.data.creditsLeft}))
            }
@@ -234,7 +235,7 @@ return(
 
 
                         <motion.button
-                        // onClick={handleStart}
+                        onClick={handleStart}
                             disabled={!role || !experience || loading}
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.95 }}
