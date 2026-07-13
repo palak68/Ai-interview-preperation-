@@ -22,6 +22,7 @@ const content =response?.data?.choices[0]?.message?.content;
 if(!content||!content.trim()){
     throw new Error("Ai return empty response");
 }
+
 return content;
 }
 catch(error){

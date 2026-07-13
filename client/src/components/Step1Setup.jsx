@@ -55,6 +55,7 @@ const handleStart = async () => {
         setLoading(true)
         try {
            const result = 
+           
            await axios.post(serverUrl + "/api/interview/generate-questions" , {role, experience, mode , resumeText, projects, skills } , {withCredentials:true}) 
            
            if(userData){
@@ -240,7 +241,7 @@ return(
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.95 }}
                             className='w-full disabled:bg-gray-600 bg-green-600 hover:bg-green-700 text-white py-3 rounded-full text-lg font-semibold transition duration-300 shadow-md'>
-                            {loading ? "Staring...":"Start Interview"}
+                            {loading ? "Starting...":"Start Interview"}
 
 
                         </motion.button>

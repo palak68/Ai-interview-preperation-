@@ -1,6 +1,9 @@
 import fs from 'fs';
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 import { askAi } from "../services/openRouter.service.js";
+import User from "../models/user.models.js";
+import Interview from '../models/interview.model.js';
+
    export const analyzeResume = async(req,res)=>{
 try{
 if(!req.file){
@@ -75,8 +78,11 @@ console.error(error);
 }
 }
  export const generateQuestion =async (req,res)=>{
+//  console.log("===== generateQuestion called =====");
+//     console.log(req.body);
+
   try{
-    const{role,experience,mode,resumeText,projects,skills} = req.body;
+    let{role,experience,mode,resumeText,projects,skills} = req.body;
     role = role?.trim();
     experience = experience?.trim();
     mode = mode?.trim();
@@ -85,7 +91,9 @@ console.error(error);
       return res.status(400).json({ message: "Role, Experience and Mode are required." })
     }
 const user = await User.findById(req.userId)
-
+// console.log("req.userId =", req.userId);
+// console.log("user =", user);
+// console.log("credits =", user?.credits);
     if (!user) {
       return res.status(404).json({
         message: "User not found."
@@ -212,6 +220,9 @@ const aiResponse = await askAi(messages)
     
   }
   catch(error){
+   
+    // console.log(error.response?.data);
+
     return res.status(500).json({message:`failed to create interview ${error}`})
   }
 }
