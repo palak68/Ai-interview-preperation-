@@ -5,7 +5,10 @@ import Auth from "./pages/Auth";
 import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import InterviewPage from "./pages/interviewPage";
+import InterviewPage from "./pages/InterviewPage";
+import InterviewHistory from "./pages/InterviewHistory";
+import Pricing from "./pages/Pricing";
+import InterviewReport from "./pages/InterviewReport";
 import { setUserData } from "./redux/userSlice";
 
 export const serverUrl = "http://localhost:8000";
@@ -26,9 +29,13 @@ getUser();
   }, [dispatch]);
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/auth" element={<Auth />} />
-      <Route path="/interview" element={<InterviewPage />} />
+      <Route path='/' element={<Home/>}/>
+      <Route path='/auth' element={<Auth/>}/>
+      <Route path='/interview' element={<InterviewPage/>}/>
+      <Route path='/history' element={<InterviewHistory/>}/>
+      <Route path='/pricing' element={<Pricing/>}/>
+      <Route path='/report/:id' element={<InterviewReport/>}/>
+
 
     </Routes>
   );
